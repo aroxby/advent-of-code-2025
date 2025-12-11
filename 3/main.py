@@ -4,16 +4,21 @@ import sys
 
 def main():
     jolts = 0
+    digits = 12
     for line in sys.stdin:
         bank = line.strip()
-        if not line:
+        if not bank:
             continue
 
-        tens = max(bank[:len(bank) - 1])
-        bank = bank.split(tens, 1)[1]
-        ones = max(bank)
-        print("+", tens+ones)
-        jolts += int(tens+ones)
+        bank_jolts_s = ""
+        bank_digits = digits
+        while(bank_digits > 0):
+            bank_digits -= 1
+            tens = max(bank[:len(bank) - bank_digits])
+            bank = bank.split(tens, 1)[1]
+            bank_jolts_s += tens
+        print(line.strip(), bank_jolts_s)
+        jolts += int(bank_jolts_s)
 
     print(jolts)
 
